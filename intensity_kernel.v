@@ -59,8 +59,7 @@ reg r4_s_axis_tvalid;
 reg r4_s_axis_tuser;
 reg r4_s_axis_tlast;
 reg [PXL_D_WIDTH*3-1:0] r4_org_pixels;
-/*** Counting the vertial line ***/
-reg [9:0] vert_cnt;
+
 
 wire stall;
 assign stall = ~m_axis_tready;
@@ -101,8 +100,7 @@ always @(posedge clk or negedge rst_n) begin
         r4_s_axis_tuser <=  0;
         r4_s_axis_tlast <=  0;
 		r4_org_pixels <=  0;
-        /*** Counting the vertial line ***/
-        vert_cnt <=  0;
+
     end else begin
         /*** 1st pipeline ***/
         r0_pxl_r <=  pxl_r;
@@ -138,7 +136,6 @@ always @(posedge clk or negedge rst_n) begin
         r4_s_axis_tvalid <=  r3_s_axis_tvalid;
         r4_s_axis_tuser <=  r3_s_axis_tuser;
         r4_s_axis_tlast <=  r3_s_axis_tlast;
-        vert_cnt <=  (r4_s_axis_tvalid & r4_s_axis_tlast) ? vert_cnt + 1 : vert_cnt;
 		r4_org_pixels <=  r3_org_pixels;
     end
 end
